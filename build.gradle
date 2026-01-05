@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.kevin'
+version = '1.0-SNAPSHOT'
+
+def cucumberVersion = '7.33.0'
+def seleniumVersion = '4.39.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation "io.cucumber:cucumber-java:$cucumberVersion"
+    testImplementation "io.cucumber:cucumber-junit-platform-engine:$cucumberVersion"  // untuk JUnit 5
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.0'  // JUnit 5
+    testImplementation 'org.junit.platform:junit-platform-suite:1.11.0'  // Untuk @Suite
+    testImplementation "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'  // Untuk ChromeDriver
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy project.tasks.register("printReportLink") {
+        doLast {
+            def reportPath = file("build/reports/tests/test/index.html")
+
+            int maxAttempts = 20
+            int attempt = 0
+            while (!reportPath.exists() && attempt < maxAttempts) {
+                sleep(500)
+                attempt++
+            }
+
+            println ""
+
+            if (reportPath.exists()) {
+                def absolutePath = reportPath.absolutePath.replace("\\", "/")  // Untuk Windows
+                println "Laporan Test Cucumber:"
+                println "file:///'${absolutePath}'"
+                println "Open report: file:///${absolutePath} Klik di sini untuk buka laporan"
+            } else {
+                println "Laporan belum tergenerate (mungkin test gagal)."
+            }
+        }
+    }
+}
