@@ -20,23 +20,32 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle (Official Latest Action)
-        uses: gradle/actions/setup-gradle@v4  # Versi terbaru (ganti dari gradle-build-action)
+      - name: Setup Gradle (Official & Stable)
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Install Chrome Browser
         uses: browser-actions/setup-chrome@latest
-        id: setup-chrome
 
-      - name: Verify Chrome Installation
-        run: |
-          echo "Chrome version: ${{ steps.setup-chrome.outputs.chrome-version }}"
-          google-chrome --version
-
-      - name: Run UI Tests (Headless Mode)
+      - name: Run UI Tests (Headless Mode - Wajib di CI)
         run: ./gradlew clean test -Dheadless=true
+
+      - name: Wait & Upload Cucumber HTML Report
+        if: always()
+        run: |
+          # Tunggu sampai report pasti muncul (max 10 detik)
+          for i in {1..20}; do
+            if [ -f build/reports/cucumber/html/index.html ]; then
+              echo "Laporan Cucumber ditemukan!"
+              break
+            fi
+            echo "Menunggu laporan... ($i/20)"
+            sleep 0.5
+          done
+          echo "Upload artifact report..."
+        shell: bash
 
       - name: Upload Cucumber HTML Report
         if: always()
@@ -46,9 +55,9 @@ jobs:
           path: build/reports/cucumber/html/
           retention-days: 30
 
-      - name: Upload JUnit Report (Bonus)
+      - name: Upload Test Results (JUnit)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: junit-report
+          name: junit-test-results
           path: build/test-results/test/
