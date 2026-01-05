@@ -1,0 +1,49 @@
+name: CI - Automation Testing (UI Web)
+
+on:
+  push:
+    branches: [ main ]  # Ganti dengan branch utama kamu kalau beda
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ui-test:
+    runs-on: ubuntu-latest  # Runner Linux (gratis & stabil)
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle  # Cache dependencies Gradle otomatis (cepat!)
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3  # Rekomendasi resmi Gradle untuk caching lebih baik
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Install Chrome for Selenium (UI Test)
+        uses: browser-actions/setup-chrome@latest
+
+      - name: Run UI Web Tests (Headless)
+        run: ./gradlew clean test -Dheadless=true  # Pastikan kamu sudah support -Dheadless=true seperti sebelumnya
+
+      - name: Upload Cucumber HTML Report
+        if: always()  # Upload bahkan kalau test gagal
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-html-report
+          path: build/reports/cucumber/html/
+          retention-days: 30  # Simpan artifact 30 hari
+
+      - name: Upload Cucumber JSON Report (opsional)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-json-report
+          path: build/reports/cucumber/cucumber.json
