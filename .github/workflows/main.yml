@@ -2,13 +2,13 @@ name: CI - Automation Testing (UI Web)
 
 on:
   push:
-    branches: [ main ]  # Ganti dengan branch utama kamu kalau beda
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
   ui-test:
-    runs-on: ubuntu-latest  # Runner Linux (gratis & stabil)
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -19,31 +19,36 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle  # Cache dependencies Gradle otomatis (cepat!)
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3  # Rekomendasi resmi Gradle untuk caching lebih baik
+      - name: Setup Gradle (Official Latest Action)
+        uses: gradle/actions/setup-gradle@v4  # Versi terbaru (ganti dari gradle-build-action)
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Install Chrome for Selenium (UI Test)
+      - name: Install Chrome Browser
         uses: browser-actions/setup-chrome@latest
+        id: setup-chrome
 
-      - name: Run UI Web Tests (Headless)
-        run: ./gradlew clean test -Dheadless=true  # Pastikan kamu sudah support -Dheadless=true seperti sebelumnya
+      - name: Verify Chrome Installation
+        run: |
+          echo "Chrome version: ${{ steps.setup-chrome.outputs.chrome-version }}"
+          google-chrome --version
+
+      - name: Run UI Tests (Headless Mode)
+        run: ./gradlew clean test -Dheadless=true
 
       - name: Upload Cucumber HTML Report
-        if: always()  # Upload bahkan kalau test gagal
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html-report
           path: build/reports/cucumber/html/
-          retention-days: 30  # Simpan artifact 30 hari
+          retention-days: 30
 
-      - name: Upload Cucumber JSON Report (opsional)
+      - name: Upload JUnit Report (Bonus)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cucumber-json-report
-          path: build/reports/cucumber/cucumber.json
+          name: junit-report
+          path: build/test-results/test/
