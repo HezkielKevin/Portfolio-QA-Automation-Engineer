@@ -25,11 +25,15 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+        
+      - name: Install Microsoft Edge
+        run: |
+        wget -q -O - https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+        echo "deb [arch=amd64] https://packages.microsoft.com/repos/edge stable main" | sudo tee /etc/apt/sources.list.d/microsoft-edge.list
+        sudo apt update
+        sudo apt install microsoft-edge-stable
 
-      - name: Install Chrome Browser
-        uses: browser-actions/setup-chrome@latest
-
-      - name: Run UI Tests (Headless Mode - Wajib di CI)
+      - name: Run UI Tests
         run: ./gradlew clean test -Dheadless=true
 
       - name: Wait & Upload Cucumber HTML Report
