@@ -5,7 +5,8 @@ import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
-
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class DriverManager {
     private static WebDriver driver;
@@ -13,13 +14,13 @@ public class DriverManager {
     @Before
     public void setUp() {
 
-        System.setProperty("webdriver.edge.driver", "msedgedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 
-        EdgeOptions options = new EdgeOptions();
-        options.addArguments("--headless=new");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
         options.addArguments("--window-size=1920,1080");
 
-        driver = new EdgeDriver(options);
+        driver = new ChromeDriver(options);
     }
 
     @After

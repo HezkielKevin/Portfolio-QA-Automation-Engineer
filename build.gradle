@@ -6,7 +6,7 @@ group = 'org.kevin'
 version = '1.0-SNAPSHOT'
 
 def cucumberVersion = '7.33.0'
-def seleniumVersion = '4.39.0'
+def seleniumVersion = '4.41.0'
 
 repositories {
     mavenCentral()
@@ -18,7 +18,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.0'  // JUnit 5
     testImplementation 'org.junit.platform:junit-platform-suite:1.11.0'  // Untuk @Suite
     testImplementation "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
-    testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'  // Untuk ChromeDriver
+    testImplementation 'io.github.bonigarcia:webdrivermanager:6.1.0'  // Untuk ChromeDriver
 }
 
 configurations {
