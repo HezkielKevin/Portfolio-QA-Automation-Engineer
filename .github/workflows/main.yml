@@ -39,14 +39,20 @@ jobs:
           # Install dependencies
           sudo apt-get update
           sudo apt-get install -y unzip wget
-          
-          # Ambil versi Chrome yang terinstall
-          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+')
-          echo "Chrome version: $CHROME_VERSION"
-          
-          # Download matching ChromeDriver (major version match)
-          wget -q --continue -P /tmp "https://storage.googleapis.com/chrome-for-testing-public/$CHROME_VERSION/linux64/chromedriver-linux64.zip"
-          unzip /tmp/chromedriver-linux64.zip -d /tmp
+
+          # Ambil major.minor.build dari Chrome 
+          CHROME_MAJOR=145
+          CHROMEDRIVER_VERSION="145.0.7632.160"
+
+          echo "Menggunakan ChromeDriver versi: $CHROMEDRIVER_VERSION"
+
+          wget -q --continue -P /tmp "https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip" || {
+            echo "Gagal download dari CfT, coba fallback..."
+            # Fallback kalau CfT belum update 145 full
+            wget -q -P /tmp "https://chromedriver.storage.googleapis.com/145.0.7632.160/chromedriver_linux64.zip" || exit 1
+          }
+
+          unzip /tmp/chromedriver-linux64.zip -d /tmp  # nama zip CfT: chromedriver-linux64.zip, extract chromedriver
           sudo mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
           sudo chmod +x /usr/local/bin/chromedriver
           chromedriver --version
