@@ -26,8 +26,42 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
         
-      - name: Install Microsoft Edge
-        uses: browser-actions/setup-edge@latest
+      # - name: Install Microsoft Edge
+      #   uses: browser-actions/setup-edge@latest
+
+      - name: Install Google Chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+          
+      - name: Install ChromeDriver
+        run: |
+          # Install dependencies
+          sudo apt-get update
+          sudo apt-get install -y unzip wget
+
+          # Ambil major.minor.build dari Chrome 
+          CHROME_MAJOR=145
+          CHROMEDRIVER_VERSION="145.0.7632.160"
+
+          echo "Menggunakan ChromeDriver versi: $CHROMEDRIVER_VERSION"
+
+          wget -q --continue -P /tmp "https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip" || {
+            echo "Gagal download dari CfT, coba fallback..."
+            # Fallback kalau CfT belum update 145 full
+            wget -q -P /tmp "https://chromedriver.storage.googleapis.com/145.0.7632.160/chromedriver_linux64.zip" || exit 1
+          }
+
+          unzip /tmp/chromedriver-linux64.zip -d /tmp  # nama zip CfT: chromedriver-linux64.zip, extract chromedriver
+          sudo mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
+          sudo chmod +x /usr/local/bin/chromedriver
+          chromedriver --version
+
+      - name: Debug Chrome & Driver
+        run: |
+          google-chrome --version
+          chromedriver --version
+          which chromedriver
 
       - name: Run UI Tests
         run: ./gradlew clean test -Dheadless=true
