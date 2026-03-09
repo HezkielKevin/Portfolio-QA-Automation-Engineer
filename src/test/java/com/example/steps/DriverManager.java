@@ -13,8 +13,28 @@ public class DriverManager {
 
     @Before
     public void setUp() {
+        String linuxPath = "/usr/local/bin/chromedriver";
+        String windowsPath = "chromedriver.exe";
 
-        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+        // Cek path Linux dulu (prioritas CI)
+        java.io.File driverFile = new java.io.File(linuxPath);
+        if (driverFile.exists() && driverFile.canExecute()) {
+            System.setProperty("webdriver.chrome.driver", linuxPath);
+            System.out.println("Menggunakan ChromeDriver dari CI/Linux: " + linuxPath);
+        } else {
+            // Kalau nggak ada di Linux, coba Windows/local
+            driverFile = new java.io.File(windowsPath);
+            if (driverFile.exists() && driverFile.canExecute()) {
+                System.setProperty("webdriver.chrome.driver", windowsPath);
+                System.out.println("Menggunakan ChromeDriver lokal/Windows: " + windowsPath);
+            } else {
+                // fallback ke WebDriverManager kalau keduanya nggak ada
+                 io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
+                 System.out.println("Fallback ke WebDriverManager auto-download");
+
+                throw new RuntimeException("ChromeDriver tidak ditemukan di: " + linuxPath + " atau " + windowsPath);
+            }
+        }
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
