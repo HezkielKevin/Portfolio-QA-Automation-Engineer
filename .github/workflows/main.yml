@@ -26,8 +26,13 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
         
-      - name: Install Microsoft Edge
-        uses: browser-actions/setup-edge@latest
+      # - name: Install Microsoft Edge
+      #   uses: browser-actions/setup-edge@latest
+
+      - name: Install Google Chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
 
       - name: Run UI Tests
         run: ./gradlew clean test -Dheadless=true
