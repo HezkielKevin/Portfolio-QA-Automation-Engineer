@@ -34,37 +34,24 @@ jobs:
         with:
           chrome-version: stable
           
-      - name: Install ChromeDriver
-        run: |
-          # Install dependencies
-          sudo apt-get update
-          sudo apt-get install -y unzip wget
-
-          # Ambil major.minor.build dari Chrome 
-          CHROME_MAJOR=145
-          CHROMEDRIVER_VERSION="145.0.7632.160"
-
-          echo "Menggunakan ChromeDriver versi: $CHROMEDRIVER_VERSION"
-
-          wget -q --continue -P /tmp "https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip" || {
-            echo "Gagal download dari CfT, coba fallback..."
-            # Fallback kalau CfT belum update 145 full
-            wget -q -P /tmp "https://chromedriver.storage.googleapis.com/145.0.7632.160/chromedriver_linux64.zip" || exit 1
-          }
-
-          unzip /tmp/chromedriver-linux64.zip -d /tmp  # nama zip CfT: chromedriver-linux64.zip, extract chromedriver
-          sudo mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
-          chromedriver --version
+      - name: Setup ChromeDriver
+        uses: nanasess/setup-chromedriver@v2
+        with:
+          chromedriver-version: '145' 
 
       - name: Debug Chrome & Driver
         run: |
-          google-chrome --version
-          chromedriver --version
+          google-chrome --version || echo "Chrome not found"
+          chromedriver --version || echo "chromedriver not found"
+          java -jar build/libs/*-all.jar --version || echo "No jar"
+          echo "PATH: $PATH"
           which chromedriver
+          - name: Debug Driver Setup
 
       - name: Run UI Tests
-        run: ./gradlew clean test -Dheadless=true
+        run: ./gradlew clean test -Dheadless=true -Dwebdriver.chrome.driver.auto=true
+        env:
+          WDM_CHROME_DRIVER_REPO_URL: "https://storage.googleapis.com/chrome-for-testing-public/"
 
       - name: Wait & Upload Cucumber HTML Report
         if: always()
