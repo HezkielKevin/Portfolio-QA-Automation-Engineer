@@ -67,7 +67,7 @@ jobs:
         if: always()
         run: |
           for i in {1..20}; do
-            if [ -f build/reports/cucumber/html/index.html ]; then
+            if [ -f build/reports/tests/test/index.html ]; then
               echo "Report ditemukan"
               exit 0
             fi
