@@ -108,7 +108,7 @@ jobs:
             sleep 2
       
             google-chrome --headless --disable-gpu --no-sandbox \
-              --print-to-pdf="$(pwd)/build/reports/tests/test/Github_Test_Report.pdf" \
+              --print-to-pdf="$(pwd)/../Github_Test_Report.pdf" \
               "http://localhost:8000/index.html"
           else
             echo "Skip PDF generation karena HTML tidak ada"
