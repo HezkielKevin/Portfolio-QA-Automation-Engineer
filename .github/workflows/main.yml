@@ -28,6 +28,8 @@ jobs:
 
       - name: Install Google Chrome
         uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
 
       - name: Install ChromeDriver
         run: |
@@ -52,57 +54,84 @@ jobs:
           chromedriver --version
           which chromedriver
 
-      # 🔥 RUN TEST + GENERATE CUCUMBER REPORT
-      - name: Run UI Tests + Generate Cucumber Report
-        run: ./gradlew clean test generateCucumberReport
+      - name: Run UI Tests
+        run: ./gradlew clean test -Dheadless=true
 
-      # 🔍 DEBUG (biar keliatan struktur file)
-      - name: Debug report files
+      # - name: Debug report files
+      #   if: always()
+      #   run: |
+      #     echo "Isi folder build/reports:"
+      #     ls -R build || echo "Folder build tidak ada"
+
+      - name: Ensure Cucumber Report Exists
         if: always()
         run: |
-          echo "Isi folder build:"
-          ls -R build || echo "Folder build tidak ada"
+          for i in {1..20}; do
+            if [ -f build/reports/tests/test/index.html ]; then
+              echo "Report ditemukan"
+              exit 0
+            fi
+            echo "Menunggu report... ($i/20)"
+            sleep 0.5
+          done
 
-      # 📦 UPLOAD HTML REPORT (MASTERTHOUGHT)
-      - name: Upload Cucumber HTML Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cucumber-html-report
-          path: build/cucumber-report/html
-          retention-days: 30
+          echo "ERROR: Cucumber HTML report tidak ditemukan!"
+          exit 1
 
-      # 📄 GENERATE PDF DARI REPORT (STABIL)
-      - name: Generate PDF from Cucumber Report
+      # - name: Upload Cucumber HTML Report
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: cucumber-html-report
+      #     path: build/reports/tests/test
+      #     retention-days: 20
+
+      - name: Generate PDF from HTML Report
         if: always()
         run: |
-          if [ -f build/cucumber-report/html/index.html ]; then
-            mkdir -p build/cucumber-report/pdf
-            cd build/cucumber-report/html
-
-            # Jalankan server lokal
+          if [ -f build/reports/tests/test/index.html ]; then
+            mkdir -p build/reports/tests/test/pdf
+      
+            cd build/reports/tests/test
+      
+            # jalankan server lokal
             python3 -m http.server 8000 &
             sleep 2
-
-            # Convert ke PDF
+      
+            # generate PDF dari HTTP (bukan file://)
             google-chrome --headless --disable-gpu --no-sandbox \
-              --print-to-pdf="$(pwd)/../pdf/Cucumber_Report.pdf" \
+              --print-to-pdf="$(pwd)/pdf/Github_Test_Report.pdf" \
               "http://localhost:8000/index.html"
-
+      
           else
-            echo "Report tidak ditemukan, skip PDF"
+            echo "ERROR: HTML report tidak ditemukan!"
+            exit 1
           fi
-
-      # 📦 UPLOAD PDF
-      - name: Upload Cucumber PDF Report
+          
+      # - name: Generate PDF from HTML Report
+      #   if: always()
+      #   run: |
+      #     if [ -f build/reports/tests/test/index.html ]; then
+      #       cd build/reports/tests/test
+      
+      #       python3 -m http.server 8000 &
+      #       sleep 2
+      
+      #       google-chrome --headless --disable-gpu --no-sandbox \
+      #         --print-to-pdf="$(pwd)/../Github_Test_Report.pdf" \
+      #         "http://localhost:8000/index.html"
+      #     else
+      #       echo "Skip PDF generation karena HTML tidak ada"
+      #     fi
+          
+      - name: Upload Report PDF dan HTML
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-pdf-report
-          path: build/cucumber-report/pdf
-          retention-days: 30
+          path: build/reports/tests/test
+          retention-days: 20
 
-      # 📦 UPLOAD JUNIT RESULT
       - name: Upload Test Results (JUnit)
         if: always()
         uses: actions/upload-artifact@v4
