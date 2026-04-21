@@ -78,13 +78,13 @@ jobs:
           echo "ERROR: Cucumber HTML report tidak ditemukan!"
           exit 1
 
-      - name: Upload Cucumber HTML Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cucumber-html-report
-          path: build/reports/tests/test
-          retention-days: 20
+      # - name: Upload Cucumber HTML Report
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: cucumber-html-report
+      #     path: build/reports/tests/test
+      #     retention-days: 20
 
       - name: Generate PDF from HTML Report
         if: always()
@@ -98,13 +98,13 @@ jobs:
             echo "Skip PDF generation karena HTML tidak ada"
           fi
 
-      - name: Upload PDF Report
+      - name: Upload Report PDF dan HTML
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-pdf-report
-          path: build/reports/cucumber/pdf
-          retention-days: 30
+          path: build/reports/tests/test
+          retention-days: 20
 
       - name: Upload Test Results (JUnit)
         if: always()
