@@ -90,17 +90,24 @@ jobs:
         if: always()
         run: |
           if [ -f build/reports/tests/test/index.html ]; then
-            mkdir -p build/reports/cucumber/pdf
-
-              python3 -m http.server 8000 &
-              sleep 2
+            mkdir -p build/reports/tests/test/pdf
+      
+            cd build/reports/tests/test
+      
+            # jalankan server lokal
+            python3 -m http.server 8000 &
+            sleep 2
+      
+            # generate PDF dari HTTP (bukan file://)
             google-chrome --headless --disable-gpu --no-sandbox \
-              --print-to-pdf="$(pwd)/build/reports/tests/test/Github_Test_Report.pdf" \
-              "file://$(pwd)/build/reports/cucumber/html/index.html"
+              --print-to-pdf="$(pwd)/pdf/Github_Test_Report.pdf" \
+              "http://localhost:8000/index.html"
+      
           else
-            echo "Skip PDF generation karena HTML tidak ada"
+            echo "ERROR: HTML report tidak ditemukan!"
+            exit 1
           fi
-
+          
       # - name: Generate PDF from HTML Report
       #   if: always()
       #   run: |
