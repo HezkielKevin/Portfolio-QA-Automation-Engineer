@@ -1,20 +1,12 @@
 package com.example;
 
-import org.junit.platform.suite.api.ConfigurationParameter;
-import org.junit.platform.suite.api.IncludeEngines;
-import org.junit.platform.suite.api.SelectDirectories;
-import org.junit.platform.suite.api.Suite;
-
-import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
-import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
+import org.junit.platform.suite.api.*;
 
 @Suite
 @IncludeEngines("cucumber")
 @SelectDirectories("src/test/resources/features")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.example.steps")
-@ConfigurationParameter(
-    key = PLUGIN_PROPERTY_NAME,
-    value = "pretty, json:build/cucumber-report/cucumber.json"
-)
+@ConfigurationParameter(key = "cucumber.glue", value = "com.example.steps")
+@ConfigurationParameter(key = "cucumber.plugin", value = "pretty, html:build/reports/cucumber/html, json:build/reports/cucumber/cucumber.json")
+
 public class RunCucumberTest {
 }
