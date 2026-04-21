@@ -128,7 +128,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cucumber-pdf-report
+          name: Automated-Testing-Report
           path: build/reports/tests/test
           retention-days: 20
 
