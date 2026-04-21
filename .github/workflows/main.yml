@@ -41,8 +41,8 @@ jobs:
           sudo apt-get install -y unzip wget
 
           # Ambil major.minor.build dari Chrome 
-          CHROME_MAJOR=145
-          CHROMEDRIVER_VERSION="145.0.7632.160"
+          CHROME_MAJOR=147
+          CHROMEDRIVER_VERSION="147.0.7727.57"
 
           echo "Menggunakan ChromeDriver versi: $CHROMEDRIVER_VERSION"
 
