@@ -83,16 +83,16 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html-report
-          path: build/reports/cucumber
-          retention-days: 30
+          path: build/reports/tests/test
+          retention-days: 20
 
       - name: Generate PDF from HTML Report
         if: always()
         run: |
-          if [ -f build/reports/cucumber/html/index.html ]; then
+          if [ -f build/reports/tests/test/index.html ]; then
             mkdir -p build/reports/cucumber/pdf
             google-chrome --headless --disable-gpu --no-sandbox \
-              --print-to-pdf="$(pwd)/build/reports/cucumber/pdf/Cucumber_Report.pdf" \
+              --print-to-pdf="$(pwd)/build/reports/tests/test/Github_Test_Report.pdf" \
               "file://$(pwd)/build/reports/cucumber/html/index.html"
           else
             echo "Skip PDF generation karena HTML tidak ada"
