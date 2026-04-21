@@ -86,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html-report
-          path: build/reports/cucumber/html/
+          path: build/reports/cucumber/html/index.html
           retention-days: 30
 
       - name: Generate PDF from Cucumber HTML Report
