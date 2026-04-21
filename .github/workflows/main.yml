@@ -2,9 +2,9 @@ name: CI - Automation Testing (UI Web)
 
 on:
   push:
-    branches: [ Cucumber-Reporting-(Masterthought) ]
+    branches: [ main ]
   pull_request:
-    branches: [ Cucumber-Reporting-(Masterthought) ]
+    branches: [ main ]
 
 jobs:
   ui-test:
