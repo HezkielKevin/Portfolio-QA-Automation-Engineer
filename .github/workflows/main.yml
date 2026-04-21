@@ -20,40 +20,31 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle (Official & Stable)
+      - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-        
-      # - name: Install Microsoft Edge
-      #   uses: browser-actions/setup-edge@latest
 
       - name: Install Google Chrome
         uses: browser-actions/setup-chrome@v2
         with:
           chrome-version: stable
-          
+
       - name: Install ChromeDriver
         run: |
-          # Install dependencies
           sudo apt-get update
           sudo apt-get install -y unzip wget
 
-          # Ambil major.minor.build dari Chrome 
-          CHROME_MAJOR=147
           CHROMEDRIVER_VERSION="147.0.7727.57"
 
-          echo "Menggunakan ChromeDriver versi: $CHROMEDRIVER_VERSION"
-
           wget -q --continue -P /tmp "https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip" || {
-            echo "Gagal download dari CfT, coba fallback..."
-            # Fallback kalau CfT belum update 145 full
+            echo "Fallback download..."
             wget -q -P /tmp "https://chromedriver.storage.googleapis.com/145.0.7632.160/chromedriver_linux64.zip" || exit 1
           }
 
-          unzip /tmp/chromedriver-linux64.zip -d /tmp  # nama zip CfT: chromedriver-linux64.zip, extract chromedriver
-          sudo mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
+          unzip /tmp/chromedriver-linux64.zip -d /tmp || unzip /tmp/chromedriver_linux64.zip -d /tmp
+          sudo mv /tmp/chromedriver-linux64/chromedriver /usr/local/bin/chromedriver || sudo mv /tmp/chromedriver /usr/local/bin/chromedriver
           sudo chmod +x /usr/local/bin/chromedriver
           chromedriver --version
 
@@ -66,46 +57,53 @@ jobs:
       - name: Run UI Tests
         run: ./gradlew clean test -Dheadless=true
 
-      - name: Wait & Upload Cucumber HTML Report
+      - name: Debug report files
         if: always()
         run: |
-          # Tunggu sampai report pasti muncul (max 10 detik)
+          echo "Isi folder build/reports:"
+          ls -R build || echo "Folder build tidak ada"
+
+      - name: Ensure Cucumber Report Exists
+        if: always()
+        run: |
           for i in {1..20}; do
             if [ -f build/reports/cucumber/html/index.html ]; then
-              echo "Laporan Cucumber ditemukan!"
-              break
+              echo "Report ditemukan"
+              exit 0
             fi
-            echo "Menunggu laporan... ($i/20)"
+            echo "Menunggu report... ($i/20)"
             sleep 0.5
           done
-          echo "Upload artifact report..."
-        shell: bash
+
+          echo "ERROR: Cucumber HTML report tidak ditemukan!"
+          exit 1
 
       - name: Upload Cucumber HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-html-report
-          path: build/reports/cucumber/html/index.html
+          path: build/reports/cucumber
           retention-days: 30
 
-      - name: Generate PDF from Cucumber HTML Report
+      - name: Generate PDF from HTML Report
         if: always()
         run: |
-          echo "Generating PDF report dari HTML..."
-          mkdir -p build/reports/cucumber/pdf
-          # Print the HTML report to a PDF using headless Chrome
-          google-chrome --headless --disable-gpu --no-sandbox \
-            --print-to-pdf="$(pwd)/build/reports/cucumber/pdf/Cucumber_Report.pdf" \
-            "file://$(pwd)/build/reports/cucumber/html/index.html" || echo "Gagal generate PDF"
-        shell: bash
+          if [ -f build/reports/cucumber/html/index.html ]; then
+            mkdir -p build/reports/cucumber/pdf
+            google-chrome --headless --disable-gpu --no-sandbox \
+              --print-to-pdf="$(pwd)/build/reports/cucumber/pdf/Cucumber_Report.pdf" \
+              "file://$(pwd)/build/reports/cucumber/html/index.html"
+          else
+            echo "Skip PDF generation karena HTML tidak ada"
+          fi
 
-      - name: Upload Cucumber PDF Report
+      - name: Upload PDF Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-pdf-report
-          path: build/reports/cucumber/pdf/Cucumber_Report.pdf
+          path: build/reports/cucumber/pdf
           retention-days: 30
 
       - name: Upload Test Results (JUnit)
