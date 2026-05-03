@@ -31,8 +31,6 @@ public class DriverManager {
                 // fallback ke WebDriverManager kalau keduanya nggak ada
                  io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
                  System.out.println("Fallback ke WebDriverManager auto-download");
-
-                throw new RuntimeException("ChromeDriver tidak ditemukan di: " + linuxPath + " atau " + windowsPath);
             }
         }
 
