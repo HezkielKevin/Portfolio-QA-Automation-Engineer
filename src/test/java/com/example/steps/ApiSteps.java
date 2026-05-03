@@ -1,19 +1,19 @@
 package com.example.steps;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.hamcrest.Matchers;
+import org.kevin.config.ApiConfig;
+
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import org.hamcrest.Matchers;
-import org.kevin.config.ApiConfig;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import static io.restassured.RestAssured.given;
+import io.restassured.response.Response;
 
 public class ApiSteps {
 
@@ -22,7 +22,7 @@ public class ApiSteps {
     @Given("saya mengatur base URL ke {string}")
     public void sayaMengaturBaseURLKe(String url) {
         RestAssured.baseURI = url;
-        ApiConfig.API_KEY = "reqres-free-v1";
+        ApiConfig.API_KEY = "reqres_4357dfc417da46619794b4f8faa8577f";
     }
 
     @When("saya melakukan GET request ke {string} dengan parameter page {int}")
