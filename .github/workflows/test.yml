@@ -1,4 +1,4 @@
-name: API Automation Test
+name: Automation Testing (Web & API)
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  api-test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,20 +23,25 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Run API Tests
-        run: ./gradlew clean apiTest
+      - name: Install Google Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
 
-      - name: Upload TestNG API Report
+      - name: Run Web & API Tests
+        run: ./gradlew clean test -Dheadless=true
+
+      - name: Upload Cucumber HTML Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: api-testng-report
-          path: build/reports/tests/apiTest/
+          name: cucumber-html-report
+          path: build/reports/cucumber/index.html
           retention-days: 30
 
-      - name: Upload API Test Results XML
+      - name: Upload JUnit Test Results
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: api-test-results
-          path: build/test-results/apiTest/
+          name: junit-results
+          path: build/test-results/test/
