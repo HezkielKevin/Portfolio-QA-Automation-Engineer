@@ -71,8 +71,18 @@ public class ApiSteps {
         response.then().statusCode(statusCode);
     }
 
-    @And("response body harus memiliki {string}")
-    public void responseBodyHarusMemiliki(String key) {
+    @And("response body {string} harus {int}")
+    public void responseBodyHarusInt(String key, int value) {
+        response.then().body(key, Matchers.equalTo(value));
+    }
+
+    @And("response body {string} harus {string}")
+    public void responseBodyHarusString(String key, String value) {
+        response.then().body(key, Matchers.equalTo(value));
+    }
+
+    @And("response body {string} tidak boleh kosong")
+    public void responseBodyTidakBolehKosong(String key) {
         response.then().body(key, Matchers.notNullValue());
     }
 }
