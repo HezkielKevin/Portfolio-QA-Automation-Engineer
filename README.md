@@ -1,7 +1,5 @@
 # Automation Test Framework
 
-## 🇮🇩 Bahasa Indonesia
-
 Proyek ini adalah framework automation testing terpadu yang dirancang untuk menguji aplikasi Web UI dan API dalam satu repositori. Framework ini menggunakan arsitektur Page Object Model (POM) untuk Web UI dan memisahkan struktur kode untuk menjaga keterbacaan, skalabilitas, dan kemudahan pemeliharaan.
 
 ### Struktur Proyek
@@ -51,7 +49,7 @@ Proyek ini dilengkapi dengan **GitHub Actions Workflow**. Pengujian akan dijalan
 
 ---
 
-## 🇬🇧 English
+# Automation Test Framework
 
 This project is a unified automation testing framework designed to test both Web UI and API applications within a single repository. The framework employs the Page Object Model (POM) architecture for Web UI and separates code structures to maintain readability, scalability, and ease of maintenance.
 
