@@ -12,6 +12,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Dibutuhkan untuk push ke gh-pages
 
     steps:
     - name: Checkout code
@@ -53,3 +55,11 @@ jobs:
         path: |
           build/reports/cucumber/
           build/cucumber-report/html/
+
+    - name: Deploy Report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      if: always() # Selalu deploy meskipun ada tes yang gagal
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: build/cucumber-report/html/cucumber-html-reports/
+        keep_files: false
