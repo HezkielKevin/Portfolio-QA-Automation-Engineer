@@ -58,7 +58,7 @@ jobs:
 
     - name: Create index.html for redirect
       if: always()
-      run: echo '<meta http-equiv="refresh" content="0; url=cucumber.html" />' > build/reports/cucumber/index.html
+      run: cp portfolio-page.html build/reports/cucumber/index.html
 
     - name: Deploy Report to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4

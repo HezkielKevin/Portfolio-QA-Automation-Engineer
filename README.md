@@ -1,99 +1,58 @@
-# Automation Test Framework
+# QA Automation Portfolio: E-Commerce & API Data Validation
 
-Proyek ini adalah framework automation testing terpadu yang dirancang untuk menguji aplikasi Web UI dan API dalam satu repositori. Framework ini menggunakan arsitektur Page Object Model (POM) untuk Web UI dan memisahkan struktur kode untuk menjaga keterbacaan, skalabilitas, dan kemudahan pemeliharaan.
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
+![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)
+![Cucumber](https://img.shields.io/badge/Cucumber-23D96C?style=for-the-badge&logo=cucumber&logoColor=white)
+![REST-assured](https://img.shields.io/badge/REST_assured-02303A?style=for-the-badge&logo=json&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 
-### Struktur Proyek
+> A robust, industry-standard automation suite built for high-performance testing. Features include BDD implementation, Page Object Model (POM), cross-endpoint request chaining, and CI/CD integration to simulate real-world e-commerce user journeys and API data management.
 
-Framework ini memisahkan skenario pengujian dan kode implementasi untuk Web UI dan API:
+## 📖 The Problem (Technical Showcase)
 
-- **Features**: Skenario ditulis dalam format Gherkin (`.feature`) dan dipisahkan menjadi folder `web` dan `api` di dalam `src/test/resources/features/`.
-- **Step Definitions**: Implementasi langkah-langkah Cucumber berada di paket `org.kevin.steps.web` dan `org.kevin.steps.api`.
-- **Page Objects**: Elemen dan interaksi UI untuk pengujian Web dikelola dalam paket `org.kevin.pages` (Page Object Model).
-- **Runners**: Konfigurasi eksekusi pengujian ada di `org.kevin.runners`.
+Proyek ini tidak sekadar pengujian otomatis biasa, melainkan simulasi skenario dunia nyata (Technical Showcase) untuk menguji keandalan sistem web dan API.
+- **Web UI (SwagLabs):** Mengotomatisasi alur kompleks e-commerce, mencakup "End-to-End User Journey" seperti proses *login*, validasi halaman, hingga penanganan *Negative Testing* (memastikan sistem menolak *login* dengan kredensial tidak valid).
+- **API (ReqRes):** Fokus pada "Contract Testing & Data Validation". Memvalidasi operasi manajemen *user* (GET, POST, PATCH), *Happy Path* (status 200/201), dan *Negative Testing* (menangani token atau request yang tidak sah).
 
-### Teknologi dan Pustaka
+## 🚀 The Approach
 
-Berikut adalah alat dan pustaka utama yang digunakan dalam pengembangan framework ini:
+Untuk memastikan *framework* ini memenuhi standar industri, saya menerapkan pendekatan arsitektur yang terstruktur:
 
-- **Bahasa Pemrograman**: Java 17
-- **Build Tool**: Gradle
-- **Testing Framework**: JUnit 5 (JUnit Platform)
-- **BDD Framework**: Cucumber
-- **Web UI Automation**: Selenium WebDriver & WebDriverManager
-- **API Automation**: REST-assured
-- **Pelaporan (Reporting)**: Cucumber Reporting (HTML/JSON) & Masterthought Report
+| Komponen | Teknologi | Alasan & Implementasi |
+| --- | --- | --- |
+| **Framework** | Cucumber + Gherkin | **BDD Approach:** Saya menggunakan BDD untuk menjembatani kesenjangan komunikasi antara kebutuhan bisnis (Product Manager) dan implementasi teknis. *Test cases* menjadi dokumen hidup yang mudah dibaca non-programmer. |
+| **Design Pattern** | Page Object Model (POM) | **Modular Architecture:** Setiap halaman website dipisahkan menjadi *object* tersendiri di dalam paket `org.kevin.pages`. Ini secara drastis meningkatkan *reusability* dan mempermudah *maintenance* ketika terjadi perubahan UI tanpa menyentuh *step definitions*. |
+| **Automation Tool** | Selenium & REST-assured | **Hybrid Testing:** Saya mengintegrasikan testing UI dan API. Selenium digunakan karena stabilitasnya dalam menangani elemen dinamis, dan REST-assured digunakan untuk mengelola *data setup* serta validasi *backend* secara presisi. |
+| **CI/CD** | GitHub Actions | **Automation Pipeline:** Menjalankan *regression test* secara otomatis di setiap *push* atau *pull request*. Ini memastikan bahwa tidak ada fitur yang rusak (*regression*) sebelum kode digabung ke *branch* utama. |
 
-### Cara Menjalankan Pengujian
+## 📊 The Results & Evidence
 
-Proyek ini telah dikonfigurasi dengan dua custom Gradle tasks untuk memudahkan eksekusi pengujian secara spesifik:
+Setiap langkah dalam pengujian ini didokumentasikan dan diverifikasi oleh mesin, termasuk **tangkapan layar otomatis (Auto-Screenshot)** setiap kali sebuah langkah Web UI dieksekusi, yang terlampir langsung di dalam laporan.
 
-1. **Menjalankan Pengujian API** (Menjalankan semua skenario dengan tag `@api`):
-   ```bash
-   ./gradlew runApiTests
-   ```
+👉 **[Lihat Live HTML Report & Studi Kasus](https://hezkielkevin.github.io/Portfolio-QA-Automation-Engineer/)**
 
-2. **Menjalankan Pengujian Web UI** (Menjalankan semua skenario dengan tag `@web`):
-   ```bash
-   ./gradlew runWebTests
-   ```
-
-3. **Menghasilkan Laporan (HTML)**:
-   ```bash
-   ./gradlew generateCucumberReport
-   ```
-   Laporan dapat diakses pada direktori `build/cucumber-report/html/cucumber-html-reports/overview-features.html`.
-
-### Continuous Integration (CI)
-
-Proyek ini dilengkapi dengan **GitHub Actions Workflow**. Pengujian akan dijalankan secara otomatis saat terjadi _Pull Request_ atau _Push_ ke branch utama. Workflow ini juga dapat dijalankan secara manual (_Workflow Dispatch_). Hasil pelaporan otomatis diunggah sebagai artifacts pada setiap akhir run.
+### Test Coverage Summary:
+- **Authentication (Web):** Valid login, invalid credentials, locked user accounts.
+- **Data Integrity (API):** Validasi *schema*, respons data, pembuatan data sukses, hingga penolakan operasi tanpa token (401).
 
 ---
 
-# Automation Test Framework
+## 💻 How to Run Locally
 
-This project is a unified automation testing framework designed to test both Web UI and API applications within a single repository. The framework employs the Page Object Model (POM) architecture for Web UI and separates code structures to maintain readability, scalability, and ease of maintenance.
+Proyek ini telah dikonfigurasi dengan Gradle agar sangat mudah dijalankan.
 
-### Project Structure
+**1. Menjalankan Pengujian API:**
+```bash
+./gradlew runApiTests
+```
 
-The framework separates test scenarios and implementation code for Web UI and API:
+**2. Menjalankan Pengujian Web UI:**
+```bash
+./gradlew runWebTests
+```
 
-- **Features**: Scenarios are written in Gherkin format (`.feature`) and separated into `web` and `api` folders under `src/test/resources/features/`.
-- **Step Definitions**: Cucumber step implementations are located in `org.kevin.steps.web` and `org.kevin.steps.api` packages.
-- **Page Objects**: UI elements and interactions for Web testing are managed in the `org.kevin.pages` package (Page Object Model).
-- **Runners**: Test execution configurations are located in `org.kevin.runners`.
-
-### Technologies and Libraries
-
-The following are the core tools and libraries used in developing this framework:
-
-- **Programming Language**: Java 17
-- **Build Tool**: Gradle
-- **Testing Framework**: JUnit 5 (JUnit Platform)
-- **BDD Framework**: Cucumber
-- **Web UI Automation**: Selenium WebDriver & WebDriverManager
-- **API Automation**: REST-assured
-- **Reporting**: Cucumber Reporting (HTML/JSON) & Masterthought Report
-
-### How to Run Tests
-
-This project is configured with two custom Gradle tasks to facilitate specific test executions:
-
-1. **Run API Tests** (Executes all scenarios tagged with `@api`):
-   ```bash
-   ./gradlew runApiTests
-   ```
-
-2. **Run Web UI Tests** (Executes all scenarios tagged with `@web`):
-   ```bash
-   ./gradlew runWebTests
-   ```
-
-3. **Generate Reports (HTML)**:
-   ```bash
-   ./gradlew generateCucumberReport
-   ```
-   Reports can be accessed in the `build/cucumber-report/html/cucumber-html-reports/overview-features.html` directory.
-
-### Continuous Integration (CI)
-
-This project includes a **GitHub Actions Workflow**. Tests are executed automatically upon a _Pull Request_ or _Push_ to the main branch. This workflow can also be triggered manually (_Workflow Dispatch_). The reporting results are automatically uploaded as artifacts at the end of every run.
+**3. Menjalankan Semua Tes:**
+```bash
+./gradlew test
+```
+Laporan lengkap akan secara otomatis ter-generate di `build/reports/cucumber/cucumber.html`.

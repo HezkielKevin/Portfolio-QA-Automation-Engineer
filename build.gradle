@@ -52,6 +52,8 @@ task runApiTests(type: Test) {
     useJUnitPlatform {
         includeEngines 'cucumber'
     }
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
     systemProperty("cucumber.filter.tags", "@api")
     systemProperty("cucumber.plugin", "pretty, html:build/reports/cucumber/api-report.html, json:build/cucumber-report/api.json")
 }
@@ -60,6 +62,8 @@ task runWebTests(type: Test) {
     useJUnitPlatform {
         includeEngines 'cucumber'
     }
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
     systemProperty("cucumber.filter.tags", "@web")
     systemProperty("cucumber.plugin", "pretty, html:build/reports/cucumber/web-report.html, json:build/cucumber-report/web.json")
 }

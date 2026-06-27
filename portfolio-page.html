@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio QA Automation - Hezkiel Kevin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            object-fit: cover;
+        }
+
+        .header-content h1 {
+            margin: 0 0 8px 0;
+            font-size: 2.5rem;
+        }
+
+        .header-content p {
+            margin: 0 0 16px 0;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-report {
+            background-color: #10b981;
+            margin-top: 30px;
+            font-size: 1.2rem;
+            padding: 14px 28px;
+            display: block;
+            text-align: center;
+            border-radius: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .btn-report:hover {
+            background-color: #059669;
+        }
+
+        section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            animation: fadeIn 1s ease-out;
+            transition: transform 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: var(--accent);
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .badges img {
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <!-- Menggunakan foto profil otomatis dari GitHub Avatar karena sinkron dan terlihat profesional -->
+        <img src="https://github.com/HezkielKevin.png" alt="Hezkiel Kevin" class="profile-pic">
+        <div class="header-content">
+            <h1>Hezkiel Kevin</h1>
+            <p>QA Automation Engineer</p>
+            <a href="https://www.linkedin.com/in/hezwell/" target="_blank" class="btn">
+                Connect on LinkedIn
+            </a>
+        </div>
+    </header>
+
+    <section>
+        <h2>The Problem (Technical Showcase)</h2>
+        <p>Proyek ini adalah simulasi pengujian skala industri (Technical Showcase) yang berfokus pada kualitas sistem web dan layanan API. Skenario mencakup alur kompleks seperti <strong>End-to-End E-commerce User Journey</strong> (mulai dari pemilihan produk hingga *checkout*) dan <strong>API Data Validation</strong> (pengujian skema, respons sukses, serta skenario negatif pada sistem manajemen data pengguna).</p>
+    </section>
+
+    <section>
+        <h2>The Approach</h2>
+        <table>
+            <tr>
+                <th>Komponen</th>
+                <th>Teknologi</th>
+                <th>Alasan & Pendekatan</th>
+            </tr>
+            <tr>
+                <td><strong>Framework</strong></td>
+                <td>Cucumber + Gherkin</td>
+                <td>Saya menggunakan pendekatan BDD untuk menjembatani komunikasi antara kebutuhan bisnis dan implementasi teknis. Dengan Gherkin, <i>test cases</i> menjadi dokumen hidup yang bisa dibaca non-programmer.</td>
+            </tr>
+            <tr>
+                <td><strong>Design Pattern</strong></td>
+                <td>Page Object Model</td>
+                <td>Framework ini dibangun menggunakan <strong>Page Object Model (POM)</strong> untuk meningkatkan reusability dan maintainability. Ketika ada perubahan UI, saya hanya perlu mengubah satu file objek halaman tanpa merusak skenario pengujian.</td>
+            </tr>
+            <tr>
+                <td><strong>Web Automation</strong></td>
+                <td>Selenium WebDriver</td>
+                <td>Memastikan kompatibilitas pengujian *cross-browser* dan memiliki stabilitas yang sangat baik dengan *explicit waits* untuk menangani elemen web dinamis.</td>
+            </tr>
+            <tr>
+                <td><strong>API Automation</strong></td>
+                <td>REST-assured</td>
+                <td>Memungkinkan validasi data API secara end-to-end, memastikan integritas kontrak data dan melakukan <i>chaining requests</i> untuk skenario hybrid.</td>
+            </tr>
+            <tr>
+                <td><strong>CI/CD Pipeline</strong></td>
+                <td>GitHub Actions</td>
+                <td>Menjalankan <i>regression test</i> secara otomatis setiap kali ada <i>code commit</i> atau <i>Pull Request</i>, memastikan tidak ada fitur yang rusak sebelum masuk ke *branch* utama.</td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h2>The Tech Stack</h2>
+        <div class="badges">
+            <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" alt="Java">
+            <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white" alt="Selenium">
+            <img src="https://img.shields.io/badge/Cucumber-23D96C?style=for-the-badge&logo=cucumber&logoColor=white" alt="Cucumber">
+            <img src="https://img.shields.io/badge/Gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white" alt="Gradle">
+            <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions">
+        </div>
+    </section>
+
+    <section>
+        <h2>The Results & Evidence</h2>
+        <p>Laporan pengujian dieksekusi dan dihasilkan secara otomatis oleh pipeline CI/CD kami. Laporan ini mencakup hasil pengujian untuk skenario positif maupun negatif (Negative Testing) beserta dengan bukti <strong>Screenshots otomatis</strong> untuk Web UI setiap langkah eksekusinya.</p>
+        <a href="cucumber.html" class="btn-report">
+            View Full Automation Report & Screenshots
+        </a>
+    </section>
+</div>
+
+</body>
+</html>
