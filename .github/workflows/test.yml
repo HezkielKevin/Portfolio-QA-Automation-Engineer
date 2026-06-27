@@ -58,12 +58,12 @@ jobs:
 
     - name: Create index.html for redirect
       if: always()
-      run: echo '<meta http-equiv="refresh" content="0; url=overview-features.html" />' > build/cucumber-report/html/cucumber-html-reports/index.html
+      run: echo '<meta http-equiv="refresh" content="0; url=cucumber.html" />' > build/reports/cucumber/index.html
 
     - name: Deploy Report to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       if: always() # Selalu deploy meskipun ada tes yang gagal
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: build/cucumber-report/html/cucumber-html-reports/
+        publish_dir: build/reports/cucumber/
         keep_files: false
