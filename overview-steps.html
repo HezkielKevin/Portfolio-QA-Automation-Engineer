@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.tablesorter.min.js"></script>
+<script src="js/Chart.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="css/cucumber.css" type="text/css"/>
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
+<link rel="shortcut icon" href="images/favicon.png"/>
+
+<script>
+$(document).ready(function() {
+    // this will tell tablesorter to try looking for the data-value attribute
+    // if present, it'll sort by that instead
+    // otherwise, it'll sort by the text content of the table cell
+    $("#tablesorter").tablesorter({
+        textAttribute: 'data-value',
+        // ignores the first row of the header, the 'scenario', 'steps', since
+        // sorting those doesn't make sense
+        selectorHeaders: '> thead tr:not(.dont-sort) th',
+        // use a stable sort
+        sortStable: true
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<title>Cucumber Reports  - Steps Overview</title>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navigation">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <p class="navbar-text navbar-left">Cucumber Report</p>
+      <ul class="nav navbar-nav navbar-right">
+        <li role="presentation" ><a href="overview-features.html">Features</a></li>
+        <li role="presentation" ><a href="overview-tags.html">Tags</a></li>
+        <li role="presentation"     class="active" ><a href="overview-steps.html">Steps</a></li>
+        <li role="presentation" ><a href="overview-failures.html">Failures</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container-fluid">
+  <div class="col-md-5 col-md-offset-1">
+
+<table class="table table-bordered" id="build-info">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info">
+      <td>Web UI Automation Report</td>
+      <td>27 Jun 2026, 02:27</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+  <div class="col-md-3 col-md-offset-2">
+  </div>
+</div>
+
+
+<div id="report-lead" class="container-fluid">
+  <div class="col-md-10 col-md-offset-1">
+    <h2>Steps Statistics</h2>
+      <p>The following graph shows step statistics for this build. Below list is based on results.
+ step does not provide information about result then is not listed below.
+ Additionally @Before and @After are not counted because they are part of the scenarios, not steps.</p>
+  </div>
+</div>
+
+<div class="container-fluid" id="report">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <table id="tablesorter" class="stats-table table-hover">
+
+        <thead>
+          <tr class="header">
+            <th>Implementation</th>
+            <th>Occurrences</th>
+            <th>Average duration</th>
+            <th>Max duration</th>
+            <th>Total durations</th>
+            <th>Ratio</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+              <td class="location">org.kevin.steps.api.ApiSteps.responseBodyHarusInt(java.lang.String,int)</td>
+              <td>3</td>
+              <td class="duration" data-value="223074449">0.223</td>
+              <td class="duration" data-value="223074449">0.602</td>
+              <td class="duration" data-value="669223347">0.669</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.api.ApiSteps.responseBodyHarusString(java.lang.String,java.lang.String)</td>
+              <td>2</td>
+              <td class="duration" data-value="40308154">0.040</td>
+              <td class="duration" data-value="40308154">0.068</td>
+              <td class="duration" data-value="80616308">0.080</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.api.ApiSteps.responseBodyTidakBolehKosong(java.lang.String)</td>
+              <td>2</td>
+              <td class="duration" data-value="11667645">0.011</td>
+              <td class="duration" data-value="11667645">0.011</td>
+              <td class="duration" data-value="23335290">0.023</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.api.ApiSteps.sayaMelakukanGETRequestKeDenganParameterPage(java.lang.String,int)</td>
+              <td>2</td>
+              <td class="duration" data-value="878630402">0.878</td>
+              <td class="duration" data-value="878630402">1.533</td>
+              <td class="duration" data-value="1757260804">1.757</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.api.ApiSteps.sayaMelakukanPATCHRequestKeDenganBody(java.lang.String,java.lang.String)</td>
+              <td>1</td>
+              <td class="duration" data-value="305579126">0.305</td>
+              <td class="duration" data-value="305579126">0.305</td>
+              <td class="duration" data-value="305579126">0.305</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.api.ApiSteps.sayaMelakukanPOSTRequestKeDenganBody(java.lang.String,java.lang.String)</td>
+              <td>1</td>
+              <td class="duration" data-value="127583886">0.127</td>
+              <td class="duration" data-value="127583886">0.127</td>
+              <td class="duration" data-value="127583886">0.127</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.api.ApiSteps.sayaMelakukanPOSTRequestKeDenganBodyDariFile(java.lang.String,java.lang.String)</td>
+              <td>1</td>
+              <td class="duration" data-value="238546561">0.238</td>
+              <td class="duration" data-value="238546561">0.238</td>
+              <td class="duration" data-value="238546561">0.238</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.api.ApiSteps.sayaMengaturBaseURLKe(java.lang.String)</td>
+              <td>5</td>
+              <td class="duration" data-value="68873782">0.068</td>
+              <td class="duration" data-value="68873782">0.343</td>
+              <td class="duration" data-value="344368911">0.344</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.api.ApiSteps.statusCodeHarus(int)</td>
+              <td>5</td>
+              <td class="duration" data-value="7215594">0.007</td>
+              <td class="duration" data-value="7215594">0.032</td>
+              <td class="duration" data-value="36077970">0.036</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.web.DriverManager.setUp()</td>
+              <td>4</td>
+              <td class="duration" data-value="2315838314">2.315</td>
+              <td class="duration" data-value="2315838314">7.803</td>
+              <td class="duration" data-value="9263353258">9.263</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.web.DriverManager.tearDown()</td>
+              <td>4</td>
+              <td class="duration" data-value="83906301">0.083</td>
+              <td class="duration" data-value="83906301">0.089</td>
+              <td class="duration" data-value="335625206">0.335</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.web.LoginSteps.saya_berhasil_login_dan_melihat_dashboard()</td>
+              <td>1</td>
+              <td class="duration" data-value="12019604">0.012</td>
+              <td class="duration" data-value="12019604">0.012</td>
+              <td class="duration" data-value="12019604">0.012</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.web.LoginSteps.saya_klik_tombol_login()</td>
+              <td>4</td>
+              <td class="duration" data-value="156057938">0.156</td>
+              <td class="duration" data-value="156057938">0.262</td>
+              <td class="duration" data-value="624231752">0.624</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.web.LoginSteps.saya_melihat_pesan_error(java.lang.String)</td>
+              <td>3</td>
+              <td class="duration" data-value="36325979">0.036</td>
+              <td class="duration" data-value="36325979">0.041</td>
+              <td class="duration" data-value="108977939">0.108</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.web.LoginSteps.saya_memasukkan_password(java.lang.String)</td>
+              <td>4</td>
+              <td class="duration" data-value="101648547">0.101</td>
+              <td class="duration" data-value="101648547">0.116</td>
+              <td class="duration" data-value="406594191">0.406</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.web.LoginSteps.saya_memasukkan_username(java.lang.String)</td>
+              <td>3</td>
+              <td class="duration" data-value="198011181">0.198</td>
+              <td class="duration" data-value="198011181">0.268</td>
+              <td class="duration" data-value="594033543">0.594</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.web.LoginSteps.saya_memasukkan_username_yang_sangat_panjang()</td>
+              <td>1</td>
+              <td class="duration" data-value="277103677">0.277</td>
+              <td class="duration" data-value="277103677">0.277</td>
+              <td class="duration" data-value="277103677">0.277</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">org.kevin.steps.web.LoginSteps.saya_membuka_halaman_login()</td>
+              <td>4</td>
+              <td class="duration" data-value="434868654">0.434</td>
+              <td class="duration" data-value="434868654">0.937</td>
+              <td class="duration" data-value="1739474618">1.739</td>
+              <td class="passed">100.00%</td>
+            </tr>
+        </tbody>
+
+        <tfoot class="total">
+          <tr>
+            <td>18</td>
+            <td>50</td>
+            <td class="duration">0.338</td>
+            <td class="duration">9.263</td>
+            <td class="duration">16.944</td>
+            <td>Totals</td>
+          </tr>
+        </tfoot>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<nav class="navbar navbar-default" id="footer">
+  <div class="container-fluid">
+    <p class="navbar-text navbar-right">
+        <small>generate Cucumber HTML reports via:&nbsp;</small>
+        <a class="navbar-link" href="https://github.com/jenkinsci/cucumber-reports-plugin">Jenkins Plugin</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-reporting">Standalone</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-sandwich">Sandwich</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/maven-cucumber-reporting">Maven</a>
+        &nbsp;&nbsp;
+    </p>
+  </div>
+</nav>
+
+</body>
+</html>
