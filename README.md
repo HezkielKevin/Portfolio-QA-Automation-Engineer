@@ -1,70 +1,101 @@
+# Automation Test Framework
 
-Sebelum memulai tugas silahkan tonton dulu video berikut ini: https://drive.google.com/file/d/1jLrqXEr6AnFUAG9qXCyexOwDiYH66RAz/view?usp=drive_link
+## 🇮🇩 Bahasa Indonesia
 
-Instruksi Tugas
+Proyek ini adalah framework automation testing terpadu yang dirancang untuk menguji aplikasi Web UI dan API dalam satu repositori. Framework ini menggunakan arsitektur Page Object Model (POM) untuk Web UI dan memisahkan struktur kode untuk menjaga keterbacaan, skalabilitas, dan kemudahan pemeliharaan.
 
-Membuat kerangka kerja (framework) untuk menguji tampilan dan fungsi dari sebuah website secara otomatis. Framework ini akan:
-Menggunakan Cucumber untuk menulis skenario uji dalam format seperti cerita
+### Struktur Proyek
 
-Menggunakan Selenium untuk menjalankan tes di browser
+Framework ini memisahkan skenario pengujian dan kode implementasi untuk Web UI dan API:
 
-Ditulis dalam Java, dikelola menggunakan Gradle
+- **Features**: Skenario ditulis dalam format Gherkin (`.feature`) dan dipisahkan menjadi folder `web` dan `api` di dalam `src/test/resources/features/`.
+- **Step Definitions**: Implementasi langkah-langkah Cucumber berada di paket `org.kevin.steps.web` dan `org.kevin.steps.api`.
+- **Page Objects**: Elemen dan interaksi UI untuk pengujian Web dikelola dalam paket `org.kevin.pages` (Page Object Model).
+- **Runners**: Konfigurasi eksekusi pengujian ada di `org.kevin.runners`.
 
+### Teknologi dan Pustaka
 
-Langkah-Langkah Mengerjakan Tugas:
-1. Buat Proyek Gradle
-Buat folder proyek baru
+Berikut adalah alat dan pustaka utama yang digunakan dalam pengembangan framework ini:
 
-Tambahkan build.gradle dengan dependensi berikut:
+- **Bahasa Pemrograman**: Java 17
+- **Build Tool**: Gradle
+- **Testing Framework**: JUnit 5 (JUnit Platform)
+- **BDD Framework**: Cucumber
+- **Web UI Automation**: Selenium WebDriver & WebDriverManager
+- **API Automation**: REST-assured
+- **Pelaporan (Reporting)**: Cucumber Reporting (HTML/JSON) & Masterthought Report
 
-Cucumber (untuk menjalankan test)
+### Cara Menjalankan Pengujian
 
-Selenium WebDriver (untuk otomatisasi browser)
+Proyek ini telah dikonfigurasi dengan dua custom Gradle tasks untuk memudahkan eksekusi pengujian secara spesifik:
 
-JUnit (untuk menjalankan test di Java)
+1. **Menjalankan Pengujian API** (Menjalankan semua skenario dengan tag `@api`):
+   ```bash
+   ./gradlew runApiTests
+   ```
 
-2. Gunakan Page Object Model (POM)
-Buat 1 file Java untuk setiap halaman website yang diuji
+2. **Menjalankan Pengujian Web UI** (Menjalankan semua skenario dengan tag `@web`):
+   ```bash
+   ./gradlew runWebTests
+   ```
 
-Di dalam file tersebut, buat fungsi-fungsi untuk klik tombol, isi formulir, dan baca teks dari halaman
+3. **Menghasilkan Laporan (HTML)**:
+   ```bash
+   ./gradlew generateCucumberReport
+   ```
+   Laporan dapat diakses pada direktori `build/cucumber-report/html/cucumber-html-reports/overview-features.html`.
 
-Contoh: LoginPage.java → untuk halaman login
+### Continuous Integration (CI)
 
-Ini membantu agar kode tetap rapi dan mudah dirawat
+Proyek ini dilengkapi dengan **GitHub Actions Workflow**. Pengujian akan dijalankan secara otomatis saat terjadi _Pull Request_ atau _Push_ ke branch utama. Workflow ini juga dapat dijalankan secara manual (_Workflow Dispatch_). Hasil pelaporan otomatis diunggah sebagai artifacts pada setiap akhir run.
 
-3. Tulis Test Case dengan Gherkin
-Buat file .feature dengan format cerita (Gherkin syntax)
+---
 
-4. Implementasikan Step Definitions
-Buat file Java untuk menghubungkan baris di .feature dengan perintah Java/Selenium
+## 🇬🇧 English
 
-Contoh: Baris When saya memasukkan username akan dijalankan dengan kode untuk mengetik di kolom login
+This project is a unified automation testing framework designed to test both Web UI and API applications within a single repository. The framework employs the Page Object Model (POM) architecture for Web UI and separates code structures to maintain readability, scalability, and ease of maintenance.
 
+### Project Structure
 
-5. Buat Tes Positif, Negatif, dan Batas
-Positif: login dengan username dan password yang benar
+The framework separates test scenarios and implementation code for Web UI and API:
 
-Negatif: login dengan data salah
+- **Features**: Scenarios are written in Gherkin format (`.feature`) and separated into `web` and `api` folders under `src/test/resources/features/`.
+- **Step Definitions**: Cucumber step implementations are located in `org.kevin.steps.web` and `org.kevin.steps.api` packages.
+- **Page Objects**: UI elements and interactions for Web testing are managed in the `org.kevin.pages` package (Page Object Model).
+- **Runners**: Test execution configurations are located in `org.kevin.runners`.
 
-Batas: coba masukkan username yang sangat panjang, atau kosong
+### Technologies and Libraries
 
-6. Jalankan Tes & Buat Laporan
-Jalankan semua test dan pastikan berjalan lancar
+The following are the core tools and libraries used in developing this framework:
 
-Pastikan muncul laporan hasil tes (Cucumber akan membuat laporan otomatis)
+- **Programming Language**: Java 17
+- **Build Tool**: Gradle
+- **Testing Framework**: JUnit 5 (JUnit Platform)
+- **BDD Framework**: Cucumber
+- **Web UI Automation**: Selenium WebDriver & WebDriverManager
+- **API Automation**: REST-assured
+- **Reporting**: Cucumber Reporting (HTML/JSON) & Masterthought Report
 
+### How to Run Tests
 
-Penyerahan Tugas
-Buat Repository GitHub
+This project is configured with two custom Gradle tasks to facilitate specific test executions:
 
-Upload semua file dan folder dari proyekmu
+1. **Run API Tests** (Executes all scenarios tagged with `@api`):
+   ```bash
+   ./gradlew runApiTests
+   ```
 
-Repositori harus berisi kode sumber untuk framework, implementasi Page Object Model, test case Gherkin, dan implementasi Cucumber.
+2. **Run Web UI Tests** (Executes all scenarios tagged with `@web`):
+   ```bash
+   ./gradlew runWebTests
+   ```
 
-File README yang tepat yang menjelaskan penerapan kerangka uji UI Web menggunakan Cucumber, Java, Gradle, dan Selenium.
+3. **Generate Reports (HTML)**:
+   ```bash
+   ./gradlew generateCucumberReport
+   ```
+   Reports can be accessed in the `build/cucumber-report/html/cucumber-html-reports/overview-features.html` directory.
 
-Repositori harus menyertakan kasus uji sampel untuk mendemonstrasikan fungsionalitas dari framework.
+### Continuous Integration (CI)
 
-Kirimkan Link GitHub
-
-Kirim link ke repository GitHub-mu sebagai hasil akhir tugas dibawah ini. (jika tombol ‘attach link to file’ tidak berfungsi, bisa tuliskan link di kolom ‘additional notes’ dan click next / yes pada notifikasi yang muncul, kemudian klik submit dan jawabanmu akan otomatis terkirim)
+This project includes a **GitHub Actions Workflow**. Tests are executed automatically upon a _Pull Request_ or _Push_ to the main branch. This workflow can also be triggered manually (_Workflow Dispatch_). The reporting results are automatically uploaded as artifacts at the end of every run.

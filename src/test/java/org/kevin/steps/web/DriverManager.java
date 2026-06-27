@@ -1,17 +1,15 @@
-package com.example.steps;
+package org.kevin.steps.web;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.edge.EdgeDriver;
-//import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class DriverManager {
     private static WebDriver driver;
 
-    @Before
+    @Before("@web")
     public void setUp() {
         String linuxPath = "/usr/local/bin/chromedriver";
         String windowsPath = "chromedriver.exe";
@@ -41,7 +39,7 @@ public class DriverManager {
         driver = new ChromeDriver(options);
     }
 
-    @After
+    @After("@web")
     public void tearDown() {
         if (driver != null) {
             driver.quit();

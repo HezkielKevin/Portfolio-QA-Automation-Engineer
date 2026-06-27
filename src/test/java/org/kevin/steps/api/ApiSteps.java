@@ -1,4 +1,4 @@
-package com.example.steps;
+package org.kevin.steps.api;
 
 import java.io.IOException;
 import java.nio.file.Files;

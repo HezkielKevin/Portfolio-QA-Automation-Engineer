@@ -1,3 +1,4 @@
+@web
 Feature: Login ke Swag Labs
 
   Scenario: Login berhasil dengan credential valid (Positif)

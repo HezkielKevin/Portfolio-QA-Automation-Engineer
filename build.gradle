@@ -45,6 +45,23 @@ configurations {
 
 test {
     useJUnitPlatform()
+    systemProperty("cucumber.plugin", "pretty, html:build/reports/cucumber/cucumber.html, json:build/cucumber-report/cucumber.json")
+}
+
+task runApiTests(type: Test) {
+    useJUnitPlatform {
+        includeEngines 'cucumber'
+    }
+    systemProperty("cucumber.filter.tags", "@api")
+    systemProperty("cucumber.plugin", "pretty, html:build/reports/cucumber/api-report.html, json:build/cucumber-report/api.json")
+}
+
+task runWebTests(type: Test) {
+    useJUnitPlatform {
+        includeEngines 'cucumber'
+    }
+    systemProperty("cucumber.filter.tags", "@web")
+    systemProperty("cucumber.plugin", "pretty, html:build/reports/cucumber/web-report.html, json:build/cucumber-report/web.json")
 }
 
 // ✅ TASK GENERATE CUCUMBER REPORT (MASTERTHOUGHT)

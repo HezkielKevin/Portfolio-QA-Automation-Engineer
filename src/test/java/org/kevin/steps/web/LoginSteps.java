@@ -1,6 +1,6 @@
-package com.example.steps;
+package org.kevin.steps.web;
 
-import com.example.pages.LoginPage;
+import org.kevin.pages.LoginPage;
 import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 
