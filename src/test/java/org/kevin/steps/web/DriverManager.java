@@ -78,6 +78,7 @@ public class DriverManager {
         options.addArguments("--window-size=1920,1080");
 
         driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(10));
     }
 
     @After("@web")

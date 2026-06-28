@@ -1,30 +1,32 @@
 @web
 Feature: Login ke Swag Labs
 
-  Scenario: Login berhasil dengan credential valid (Positif)
+  @positive
+  Scenario Outline: Login berhasil dengan kredensial valid (Positive)
     Given saya membuka halaman login
-    When saya memasukkan username "standard_user"
-    And saya memasukkan password "secret_sauce"
+    When saya memasukkan username "<username>"
+    And saya memasukkan password "<password>"
     And saya klik tombol login
     Then saya berhasil login dan melihat dashboard
 
-  Scenario: Login gagal dengan password salah (Negatif)
-    Given saya membuka halaman login
-    When saya memasukkan username "standard_user"
-    And saya memasukkan password "wrong_password"
-    And saya klik tombol login
-    Then saya melihat pesan error "Epic sadface: Username and password do not match any user in this service"
+    Examples:
+      | username                | password     |
+      | standard_user           | secret_sauce |
+      | problem_user            | secret_sauce |
+      | performance_glitch_user | secret_sauce |
 
-  Scenario: Login gagal dengan username kosong (Batas)
+  @negative
+  Scenario Outline: Login gagal dengan kredensial tidak valid (Negative)
     Given saya membuka halaman login
-    When saya memasukkan username ""
-    And saya memasukkan password "secret_sauce"
+    When saya memasukkan username "<username>"
+    And saya memasukkan password "<password>"
     And saya klik tombol login
-    Then saya melihat pesan error "Epic sadface: Username is required"
+    Then saya melihat pesan error "<error_message>"
 
-  Scenario: Login gagal dengan username sangat panjang (Batas)
-    Given saya membuka halaman login
-    When saya memasukkan username yang sangat panjang
-    And saya memasukkan password "secret_sauce"
-    And saya klik tombol login
-    Then saya melihat pesan error "Epic sadface: Username and password do not match any user in this service"
+    Examples:
+      | username        | password     | error_message                                                             |
+      |                 | secret_sauce | Epic sadface: Username is required                                        |
+      | standard_user   |              | Epic sadface: Password is required                                        |
+      | wrong_user      | secret_sauce | Epic sadface: Username and password do not match any user in this service |
+      | standard_user   | wrong_pass   | Epic sadface: Username and password do not match any user in this service |
+      | locked_out_user | secret_sauce | Epic sadface: Sorry, this user has been locked out.                       |

@@ -20,10 +20,6 @@ public class LoginSteps {
         getLoginPage().enterUsername(username);
     }
 
-    @When("saya memasukkan username yang sangat panjang")
-    public void saya_memasukkan_username_yang_sangat_panjang() {
-        getLoginPage().enterUsername("a".repeat(100));
-    }
 
     @When("saya memasukkan password {string}")
     public void saya_memasukkan_password(String password) {
