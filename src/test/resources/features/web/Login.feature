@@ -1,8 +1,8 @@
 @web
-Feature: Login ke Swag Labs
+Feature: Autentikasi User (Login)
 
   @positive
-  Scenario Outline: Login berhasil dengan kredensial valid (Positive)
+  Scenario Outline: Login sukses pakai akun yang valid (Positive)
     Given saya membuka halaman login
     When saya memasukkan username "<username>"
     And saya memasukkan password "<password>"
@@ -16,7 +16,7 @@ Feature: Login ke Swag Labs
       | performance_glitch_user | secret_sauce |
 
   @negative
-  Scenario Outline: Login gagal dengan kredensial tidak valid (Negative)
+  Scenario Outline: Login ditolak karena username/password salah atau kosong (Negative)
     Given saya membuka halaman login
     When saya memasukkan username "<username>"
     And saya memasukkan password "<password>"

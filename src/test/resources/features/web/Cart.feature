@@ -1,5 +1,5 @@
 @web
-Feature: Fitur Keranjang Belanja (Cart)
+Feature: Flow Keranjang Belanja (Cart)
 
   Background:
     Given saya membuka halaman login
@@ -8,7 +8,7 @@ Feature: Fitur Keranjang Belanja (Cart)
     And saya klik tombol login
 
   @positive
-  Scenario: Menambah dan menghapus produk dari keranjang
+  Scenario: Tambah dan hapus barang dari keranjang belanja (Positive)
     Given keranjang belanja kosong
     When saya menambahkan produk ke-1 ke dalam keranjang
     Then angka pada badge keranjang harus "1"

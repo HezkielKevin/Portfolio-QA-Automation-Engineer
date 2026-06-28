@@ -1,5 +1,5 @@
 @web
-Feature: Fitur Produk (Swag Labs)
+Feature: Halaman Daftar Produk (Inventory)
 
   Background:
     Given saya membuka halaman login
@@ -8,13 +8,13 @@ Feature: Fitur Produk (Swag Labs)
     And saya klik tombol login
 
   @positive
-  Scenario: Product list tampil dengan benar
+  Scenario: Pastikan semua produk muncul dengan benar (Positive)
     Then saya melihat daftar produk tersedia
     And semua produk memiliki nama dan harga
     And semua produk menampilkan gambar dengan benar
 
   @positive
-  Scenario Outline: Mengurutkan produk
+  Scenario Outline: Test fitur sorting produk berdasarkan nama dan harga (Positive)
     When saya memilih urutan produk berdasarkan "<sort_type>"
     Then produk pertama harus bernama "<expected_first_product>"
 
